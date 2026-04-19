@@ -1,0 +1,332 @@
+
+TIME: Sun Apr 19 15:13:42 2026
+PROCESS: c:\windows\system32\windowspowershell\v1.0\powershell.exe -> c:\windows\system32\notepad.exe
+[+] Script engine parent (+2)
+[+] PowerShell activity (+1)
+[+] PowerShell spawning process (+1)
+[RISK SCORE] 4
+⚠️ MEDIUM ALERT
+
+========================================
+
+TIME: Sun Apr 19 15:13:42 2026
+PROCESS: c:\windows\system32\svchost.exe -> c:\windows\winsxs\amd64_microsoft-windows-servicingstack_31bf3856ad364e35_10.0.19041.6449_none_7e0d59887c8e1467\tiworker.exe
+[RISK SCORE] 0
+ℹ️ LOW
+
+========================================
+
+TIME: Sun Apr 19 15:13:42 2026
+PROCESS: c:\windows\system32\services.exe -> c:\windows\servicing\trustedinstaller.exe
+[CHAIN] c:\windows\system32\notepad.exe → c:\windows\winsxs\amd64_microsoft-windows-servicingstack_31bf3856ad364e35_10.0.19041.6449_none_7e0d59887c8e1467\tiworker.exe → c:\windows\servicing\trustedinstaller.exe
+[RISK SCORE] 0
+ℹ️ LOW
+
+========================================
+
+TIME: Sun Apr 19 15:13:42 2026
+PROCESS: c:\windows\system32\svchost.exe -> c:\windows\system32\taskhostw.exe
+[CHAIN] c:\windows\winsxs\amd64_microsoft-windows-servicingstack_31bf3856ad364e35_10.0.19041.6449_none_7e0d59887c8e1467\tiworker.exe → c:\windows\servicing\trustedinstaller.exe → c:\windows\system32\taskhostw.exe
+[RISK SCORE] 0
+ℹ️ LOW
+
+========================================
+
+TIME: Sun Apr 19 15:13:42 2026
+PROCESS: c:\program files (x86)\microsoft\edgeupdate\microsoftedgeupdate.exe -> c:\program files (x86)\microsoft\edgeupdate\microsoftedgeupdate.exe
+[CHAIN] c:\windows\servicing\trustedinstaller.exe → c:\windows\system32\taskhostw.exe → c:\program files (x86)\microsoft\edgeupdate\microsoftedgeupdate.exe
+[RISK SCORE] 0
+ℹ️ LOW
+
+========================================
+
+PROCESS: c:\windows\system32\windowspowershell\v1.0\powershell.exe -> c:\windows\system32\notepad.exe
+[RISK SCORE] 4
+⚠️ MEDIUM ALERT
+
+========================================
+
+PROCESS: c:\windows\system32\svchost.exe -> c:\windows\winsxs\amd64_microsoft-windows-servicingstack_31bf3856ad364e35_10.0.19041.6449_none_7e0d59887c8e1467\tiworker.exe
+[RISK SCORE] 0
+ℹ️ LOW
+
+========================================
+
+PROCESS: c:\windows\system32\services.exe -> c:\windows\servicing\trustedinstaller.exe
+[CHAIN] c:\windows\system32\notepad.exe → c:\windows\winsxs\amd64_microsoft-windows-servicingstack_31bf3856ad364e35_10.0.19041.6449_none_7e0d59887c8e1467\tiworker.exe → c:\windows\servicing\trustedinstaller.exe
+[RISK SCORE] 0
+ℹ️ LOW
+
+========================================
+
+PROCESS: c:\windows\system32\svchost.exe -> c:\windows\system32\taskhostw.exe
+[CHAIN] c:\windows\winsxs\amd64_microsoft-windows-servicingstack_31bf3856ad364e35_10.0.19041.6449_none_7e0d59887c8e1467\tiworker.exe → c:\windows\servicing\trustedinstaller.exe → c:\windows\system32\taskhostw.exe
+[RISK SCORE] 0
+ℹ️ LOW
+
+========================================
+
+PROCESS: c:\program files (x86)\microsoft\edgeupdate\microsoftedgeupdate.exe -> c:\program files (x86)\microsoft\edgeupdate\microsoftedgeupdate.exe
+[CHAIN] c:\windows\servicing\trustedinstaller.exe → c:\windows\system32\taskhostw.exe → c:\program files (x86)\microsoft\edgeupdate\microsoftedgeupdate.exe
+[RISK SCORE] 0
+ℹ️ LOW
+
+========================================
+
+PROCESS: c:\windows\system32\windowspowershell\v1.0\powershell.exe -> c:\windows\system32\notepad.exe
+[CHAIN] c:\windows\system32\taskhostw.exe → c:\program files (x86)\microsoft\edgeupdate\microsoftedgeupdate.exe → c:\windows\system32\notepad.exe
+[RISK SCORE] 4
+⚠️ MEDIUM ALERT
+
+========================================
+
+PROCESS: c:\windows\system32\svchost.exe -> c:\windows\winsxs\amd64_microsoft-windows-servicingstack_31bf3856ad364e35_10.0.19041.6449_none_7e0d59887c8e1467\tiworker.exe
+[CHAIN] c:\program files (x86)\microsoft\edgeupdate\microsoftedgeupdate.exe → c:\windows\system32\notepad.exe → c:\windows\winsxs\amd64_microsoft-windows-servicingstack_31bf3856ad364e35_10.0.19041.6449_none_7e0d59887c8e1467\tiworker.exe
+[RISK SCORE] 0
+ℹ️ LOW
+
+========================================
+
+PROCESS: c:\windows\system32\services.exe -> c:\windows\servicing\trustedinstaller.exe
+[CHAIN] c:\windows\system32\notepad.exe → c:\windows\winsxs\amd64_microsoft-windows-servicingstack_31bf3856ad364e35_10.0.19041.6449_none_7e0d59887c8e1467\tiworker.exe → c:\windows\servicing\trustedinstaller.exe
+[RISK SCORE] 0
+ℹ️ LOW
+
+========================================
+
+PROCESS: c:\windows\system32\svchost.exe -> c:\windows\system32\taskhostw.exe
+[CHAIN] c:\windows\winsxs\amd64_microsoft-windows-servicingstack_31bf3856ad364e35_10.0.19041.6449_none_7e0d59887c8e1467\tiworker.exe → c:\windows\servicing\trustedinstaller.exe → c:\windows\system32\taskhostw.exe
+[RISK SCORE] 0
+ℹ️ LOW
+
+========================================
+
+PROCESS: c:\program files (x86)\microsoft\edgeupdate\microsoftedgeupdate.exe -> c:\program files (x86)\microsoft\edgeupdate\microsoftedgeupdate.exe
+[CHAIN] c:\windows\servicing\trustedinstaller.exe → c:\windows\system32\taskhostw.exe → c:\program files (x86)\microsoft\edgeupdate\microsoftedgeupdate.exe
+[RISK SCORE] 0
+ℹ️ LOW
+
+========================================
+
+PROCESS: c:\windows\explorer.exe -> c:\windows\system32\windowspowershell\v1.0\powershell.exe
+[CHAIN] c:\windows\system32\taskhostw.exe → c:\program files (x86)\microsoft\edgeupdate\microsoftedgeupdate.exe → c:\windows\system32\windowspowershell\v1.0\powershell.exe
+[RISK SCORE] 0
+ℹ️ LOW
+
+========================================
+
+PROCESS: c:\windows\system32\svchost.exe -> c:\windows\system32\consent.exe
+[CHAIN] c:\program files (x86)\microsoft\edgeupdate\microsoftedgeupdate.exe → c:\windows\system32\windowspowershell\v1.0\powershell.exe → c:\windows\system32\consent.exe
+[RISK SCORE] 0
+ℹ️ LOW
+
+========================================
+
+PROCESS: c:\windows\system32\svchost.exe -> c:\windows\system32\smartscreen.exe
+[CHAIN] c:\windows\system32\windowspowershell\v1.0\powershell.exe → c:\windows\system32\consent.exe → c:\windows\system32\smartscreen.exe
+[RISK SCORE] 0
+ℹ️ LOW
+
+========================================
+
+PROCESS: c:\windows\system32\windowspowershell\v1.0\powershell.exe -> c:\windows\system32\notepad.exe
+[RISK SCORE] 4
+⚠️ MEDIUM ALERT
+
+========================================
+
+PROCESS: c:\windows\explorer.exe -> c:\windows\system32\windowspowershell\v1.0\powershell.exe
+[RISK SCORE] 0
+ℹ️ LOW
+
+========================================
+
+PROCESS: c:\windows\system32\svchost.exe -> c:\windows\system32\consent.exe
+[CHAIN] c:\windows\system32\notepad.exe → c:\windows\system32\windowspowershell\v1.0\powershell.exe → c:\windows\system32\consent.exe
+[RISK SCORE] 0
+ℹ️ LOW
+
+========================================
+
+PROCESS: c:\windows\system32\windowspowershell\v1.0\powershell.exe -> c:\windows\system32\notepad.exe
+[CHAIN] c:\windows\system32\windowspowershell\v1.0\powershell.exe → c:\windows\system32\consent.exe → c:\windows\system32\notepad.exe
+[RISK SCORE] 8
+🚨 HIGH ALERT
+
+========================================
+
+PROCESS: c:\windows\explorer.exe -> c:\windows\system32\windowspowershell\v1.0\powershell.exe
+[CHAIN] c:\windows\system32\consent.exe → c:\windows\system32\notepad.exe → c:\windows\system32\windowspowershell\v1.0\powershell.exe
+[RISK SCORE] 4
+⚠️ MEDIUM ALERT
+
+========================================
+
+PROCESS: c:\windows\system32\svchost.exe -> c:\windows\system32\consent.exe
+[CHAIN] c:\windows\system32\notepad.exe → c:\windows\system32\windowspowershell\v1.0\powershell.exe → c:\windows\system32\consent.exe
+[RISK SCORE] 4
+⚠️ MEDIUM ALERT
+
+========================================
+
+PROCESS: c:\windows\system32\svchost.exe -> c:\windows\system32\smartscreen.exe
+[CHAIN] c:\windows\system32\windowspowershell\v1.0\powershell.exe → c:\windows\system32\consent.exe → c:\windows\system32\smartscreen.exe
+[RISK SCORE] 4
+⚠️ MEDIUM ALERT
+
+========================================
+
+PROCESS: c:\windows\system32\windowspowershell\v1.0\powershell.exe -> c:\windows\system32\windowspowershell\v1.0\powershell.exe
+[CHAIN] c:\windows\system32\consent.exe → c:\windows\system32\smartscreen.exe → c:\windows\system32\windowspowershell\v1.0\powershell.exe
+[RISK SCORE] 8
+🚨 HIGH ALERT
+
+========================================
+
+PROCESS: c:\windows\system32\svchost.exe -> c:\windows\winsxs\amd64_microsoft-windows-servicingstack_31bf3856ad364e35_10.0.19041.6449_none_7e0d59887c8e1467\tiworker.exe
+[CHAIN] c:\windows\system32\smartscreen.exe → c:\windows\system32\windowspowershell\v1.0\powershell.exe → c:\windows\winsxs\amd64_microsoft-windows-servicingstack_31bf3856ad364e35_10.0.19041.6449_none_7e0d59887c8e1467\tiworker.exe
+[RISK SCORE] 4
+⚠️ MEDIUM ALERT
+
+========================================
+
+PROCESS: c:\windows\system32\services.exe -> c:\windows\servicing\trustedinstaller.exe
+[CHAIN] c:\windows\system32\windowspowershell\v1.0\powershell.exe → c:\windows\winsxs\amd64_microsoft-windows-servicingstack_31bf3856ad364e35_10.0.19041.6449_none_7e0d59887c8e1467\tiworker.exe → c:\windows\servicing\trustedinstaller.exe
+[RISK SCORE] 4
+⚠️ MEDIUM ALERT
+
+========================================
+
+PROCESS: c:\windows\system32\windowspowershell\v1.0\powershell.exe -> c:\windows\system32\notepad.exe
+[CHAIN] c:\windows\winsxs\amd64_microsoft-windows-servicingstack_31bf3856ad364e35_10.0.19041.6449_none_7e0d59887c8e1467\tiworker.exe → c:\windows\servicing\trustedinstaller.exe → c:\windows\system32\notepad.exe
+[RISK SCORE] 8
+🚨 HIGH ALERT
+
+========================================
+
+PROCESS: c:\windows\explorer.exe -> c:\windows\system32\windowspowershell\v1.0\powershell.exe
+[CHAIN] c:\windows\servicing\trustedinstaller.exe → c:\windows\system32\notepad.exe → c:\windows\system32\windowspowershell\v1.0\powershell.exe
+[RISK SCORE] 4
+⚠️ MEDIUM ALERT
+
+========================================
+
+PROCESS: c:\windows\system32\svchost.exe -> c:\windows\system32\consent.exe
+[CHAIN] c:\windows\system32\notepad.exe → c:\windows\system32\windowspowershell\v1.0\powershell.exe → c:\windows\system32\consent.exe
+[RISK SCORE] 4
+⚠️ MEDIUM ALERT
+
+========================================
+
+PROCESS: c:\windows\system32\svchost.exe -> c:\windows\system32\smartscreen.exe
+[CHAIN] c:\windows\system32\windowspowershell\v1.0\powershell.exe → c:\windows\system32\consent.exe → c:\windows\system32\smartscreen.exe
+[RISK SCORE] 4
+⚠️ MEDIUM ALERT
+
+========================================
+
+PROCESS: c:\windows\system32\windowspowershell\v1.0\powershell.exe -> c:\windows\system32\windowspowershell\v1.0\powershell.exe
+[CHAIN] c:\windows\system32\consent.exe → c:\windows\system32\smartscreen.exe → c:\windows\system32\windowspowershell\v1.0\powershell.exe
+[RISK SCORE] 8
+🚨 HIGH ALERT
+
+========================================
+
+PROCESS: c:\windows\system32\windowspowershell\v1.0\powershell.exe -> c:\windows\system32\notepad.exe
+[CHAIN] c:\windows\system32\smartscreen.exe → c:\windows\system32\windowspowershell\v1.0\powershell.exe → c:\windows\system32\notepad.exe
+[RISK SCORE] 8
+🚨 HIGH ALERT
+
+========================================
+
+PROCESS: c:\windows\explorer.exe -> c:\windows\system32\windowspowershell\v1.0\powershell.exe
+[CHAIN] c:\windows\system32\windowspowershell\v1.0\powershell.exe → c:\windows\system32\notepad.exe → c:\windows\system32\windowspowershell\v1.0\powershell.exe
+[RISK SCORE] 4
+⚠️ MEDIUM ALERT
+
+========================================
+
+PROCESS: c:\windows\system32\svchost.exe -> c:\windows\system32\consent.exe
+[CHAIN] c:\windows\system32\notepad.exe → c:\windows\system32\windowspowershell\v1.0\powershell.exe → c:\windows\system32\consent.exe
+[RISK SCORE] 4
+⚠️ MEDIUM ALERT
+
+========================================
+
+PROCESS: c:\windows\system32\svchost.exe -> c:\windows\system32\smartscreen.exe
+[CHAIN] c:\windows\system32\windowspowershell\v1.0\powershell.exe → c:\windows\system32\consent.exe → c:\windows\system32\smartscreen.exe
+[RISK SCORE] 4
+⚠️ MEDIUM ALERT
+
+========================================
+
+PROCESS: c:\windows\system32\windowspowershell\v1.0\powershell.exe -> c:\windows\system32\windowspowershell\v1.0\powershell.exe
+[CHAIN] c:\windows\system32\consent.exe → c:\windows\system32\smartscreen.exe → c:\windows\system32\windowspowershell\v1.0\powershell.exe
+[RISK SCORE] 8
+🚨 HIGH ALERT
+
+========================================
+
+PROCESS: c:\windows\system32\windowspowershell\v1.0\powershell.exe -> c:\windows\system32\notepad.exe
+[CHAIN] c:\windows\system32\smartscreen.exe → c:\windows\system32\windowspowershell\v1.0\powershell.exe → c:\windows\system32\notepad.exe
+[RISK SCORE] 4
+⚠️ MEDIUM ALERT
+
+========================================
+
+PROCESS: c:\windows\system32\windowspowershell\v1.0\powershell.exe -> c:\windows\system32\notepad.exe
+[RISK SCORE] 4
+⚠️ MEDIUM ALERT
+
+========================================
+
+PROCESS: c:\windows\system32\windowspowershell\v1.0\powershell.exe -> c:\windows\system32\notepad.exe
+[RISK SCORE] 4
+⚠️ MEDIUM ALERT
+
+========================================
+
+PROCESS: c:\windows\system32\windowspowershell\v1.0\powershell.exe -> c:\windows\system32\notepad.exe
+[RISK SCORE] 4
+⚠️ MEDIUM ALERT
+
+========================================
+
+PROCESS: c:\windows\system32\windowspowershell\v1.0\powershell.exe -> c:\windows\system32\notepad.exe
+[RISK SCORE] 4
+⚠️ MEDIUM ALERT
+
+========================================
+
+PROCESS: c:\windows\system32\windowspowershell\v1.0\powershell.exe -> c:\windows\system32\notepad.exe
+[CHAIN] c:\windows\system32\notepad.exe → c:\windows\system32\notepad.exe → c:\windows\system32\notepad.exe
+[RISK SCORE] 4
+⚠️ MEDIUM ALERT
+
+========================================
+
+PROCESS: c:\windows\system32\windowspowershell\v1.0\powershell.exe -> c:\windows\system32\notepad.exe
+[RISK SCORE] 4
+⚠️ MEDIUM ALERT
+
+========================================
+
+PROCESS: c:\windows\system32\svchost.exe -> c:\windows\winsxs\amd64_microsoft-windows-servicingstack_31bf3856ad364e35_10.0.19041.6449_none_7e0d59887c8e1467\tiworker.exe
+[RISK SCORE] 0
+ℹ️ LOW
+
+========================================
+
+PROCESS: c:\windows\system32\services.exe -> c:\windows\servicing\trustedinstaller.exe
+[CHAIN] c:\windows\system32\notepad.exe → c:\windows\winsxs\amd64_microsoft-windows-servicingstack_31bf3856ad364e35_10.0.19041.6449_none_7e0d59887c8e1467\tiworker.exe → c:\windows\servicing\trustedinstaller.exe
+[RISK SCORE] 0
+ℹ️ LOW
+
+========================================
+
+TIME: 2026-04-19 17:22:43.368000
+PROCESS: c:\windows\system32\services.exe -> c:\windows\explorer.exe
+[CHAIN] c:\windows\system32\services.exe -> c:\windows\explorer.exe
+[RISK SCORE] 0
+LOW ALERT
+========================================
