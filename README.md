@@ -13,7 +13,7 @@ A lightweight SIEM (Security Information and Event Management) system built usin
 - 🔍 Search & filter logs
 - 📈 Analytics (Top processes, alert distribution)
 - 🧠 Threat summary (Top threats detection)
-
+- 🧪 Simulated attacker behavior using PowerShell process spawning
 ---
 
 ## 🛠️ Tech Stack
