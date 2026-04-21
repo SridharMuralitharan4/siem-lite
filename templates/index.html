@@ -16,10 +16,25 @@
             color: #38bdf8;
         }
 
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .download-btn {
+            background: #2563eb;
+            padding: 10px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+
         .stats {
             display: flex;
             gap: 10px;
-            margin-bottom: 20px;
+            margin-top: 15px;
         }
 
         .stat {
@@ -39,6 +54,7 @@
             width: 300px;
             border-radius: 5px;
             border: none;
+            margin-top: 15px;
         }
 
         .charts {
@@ -78,7 +94,15 @@
 
 <body>
 
-<h1>🚨 SIEM Dashboard</h1>
+<div class="top-bar">
+    <h1>🚨 SIEM Dashboard</h1>
+
+    <!-- 🔥 DOWNLOAD BUTTON -->
+    <a href="https://github.com/SridharMuralitharan4/siem-lite/blob/main/sender.py" 
+       class="download-btn" target="_blank">
+       ⬇ Download Agent
+    </a>
+</div>
 
 <div class="stats">
     <a href="/?level=HIGH" class="stat high">High: {{ high }}</a>
@@ -129,9 +153,7 @@
                 backgroundColor: ["red", "orange", "green"]
             }]
         },
-        options: {
-            maintainAspectRatio: false
-        }
+        options: { maintainAspectRatio: false }
     });
 
     new Chart(document.getElementById("processChart"), {
