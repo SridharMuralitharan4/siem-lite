@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from collections import Counter
 from datetime import datetime
+import os
 
 app = Flask(__name__)
 
@@ -60,27 +61,20 @@ def index():
 
     events = parse_logs()
 
-    # 🔍 SEARCH FILTER
     if query:
         events = [e for e in events if query in e["process"].lower()]
 
-    # 🎯 LEVEL FILTER
     if level_filter:
         events = [e for e in events if e["level"] == level_filter]
 
-    # 📊 COUNTS
     high = len([e for e in events if e["level"] == "HIGH"])
     medium = len([e for e in events if e["level"] == "MEDIUM"])
     low = len([e for e in events if e["level"] == "LOW"])
 
-    # 📊 TOP PROCESSES (SHORT NAME FIX)
     process_names = [e["process"].split("\\")[-1] for e in events]
     process_count = Counter(process_names)
-
-    # 🔥 LIMIT TO TOP 5 (fix chart mess)
     top_processes = process_count.most_common(5)
 
-    # 🔥 TOP THREATS
     top_threats = sorted(events, key=lambda x: x.get("score", 0), reverse=True)[:5]
 
     return render_template(
@@ -96,4 +90,4 @@ def index():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
