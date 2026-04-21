@@ -330,3 +330,368 @@ PROCESS: c:\windows\system32\services.exe -> c:\windows\explorer.exe
 [RISK SCORE] 0
 LOW ALERT
 ========================================
+
+TIME: 2026-04-21 12:00:13.320000
+PROCESS: c:\windows\system32\svchost.exe -> c:\windows\system32\svchost.exe
+[CHAIN] c:\windows\system32\svchost.exe -> c:\windows\system32\svchost.exe
+[RISK SCORE] 0
+LOW ALERT
+========================================
+
+TIME: 2026-04-21 12:04:57.207000
+PROCESS: c:\windows\system32\windowspowershell\v1.0\powershell.exe -> c:\windows\system32\windowspowershell\v1.0\powershell.exe
+[CHAIN] c:\windows\system32\windowspowershell\v1.0\powershell.exe -> c:\windows\system32\windowspowershell\v1.0\powershell.exe
+[RISK SCORE] 3
+LOW ALERT
+========================================
+
+TIME: 2026-04-21 12:05:49.956000
+PROCESS: c:\windows\system32\windowspowershell\v1.0\powershell.exe -> c:\windows\system32\notepad.exe
+[CHAIN] c:\windows\system32\windowspowershell\v1.0\powershell.exe -> c:\windows\system32\notepad.exe
+[RISK SCORE] 3
+LOW ALERT
+========================================
+TIME: 2026-04-21 12:09:17
+PROCESS: Process Create:
+RuleName: -
+UtcTime: 2026-04-21 12:09:12.836
+ProcessGuid: {4f65971f-68e8-69e7-2401-000000001f00}
+ProcessId: 3368
+Image: C:\Windows\System32\notepad.exe
+FileVersion: 10.0.19041.1865 (WinBuild.160101.0800)
+Description: Notepad
+Product: Microsoft® Windows® Operating System
+Company: Microsoft Corporation
+OriginalFileName: NOTEPAD.EXE
+CommandLine: "C:\Windows\system32\notepad.exe" 
+CurrentDirectory: C:\Windows\system32\
+User: WIN10-LAB\ms
+LogonGuid: {4f65971f-669e-69e7-02ef-040000000000}
+LogonId: 0x4EF02
+TerminalSessionId: 1
+IntegrityLevel: High
+Hashes: MD5=27F71B12CB585541885A31BE22F61C83,SHA256=F9D9B9DED9A67AA3CFDBD5002F3B524B265C4086C188E1BE7C936AB25627BF01,IMPHASH=320FAF01086570930EFF84A436797927
+ParentProcessGuid: {4f65971f-68e8-69e7-2301-000000001f00}
+ParentProcessId: 7584
+ParentImage: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+ParentCommandLine: "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -enc UwB0AGEAcgB0AC0AUAByAG8AYwBlAHMAcwAgAG4AbwB0AGUAcABhAGQA
+ParentUser: WIN10-LAB\ms
+File created:
+RuleName: -
+UtcTime: 2026-04-21 12:09:12.534
+ProcessGuid: {4f65971f-68e8-69e7-2301-000000001f00}
+ProcessId: 7584
+Image: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+TargetFilename: C:\Users\ms\AppData\Local\Temp\__PSScriptPolicyTest_e11lnz3d.dfk.ps1
+CreationUtcTime: 2026-04-21 12:09:12.534
+User: WIN10-LAB\ms
+Process Create:
+RuleName: -
+UtcTime: 2026-04-21 12:09:12.412
+ProcessGuid: {4f65971f-68e8-69e7-2301-000000001f00}
+ProcessId: 7584
+Image: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+FileVersion: 10.0.19041.2913 (WinBuild.160101.0800)
+Description: Windows PowerShell
+Product: Microsoft® Windows® Operating System
+Company: Microsoft Corporation
+OriginalFileName: PowerShell.EXE
+CommandLine: "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -enc UwB0AGEAcgB0AC0AUAByAG8AYwBlAHMAcwAgAG4AbwB0AGUAcABhAGQA
+CurrentDirectory: C:\Windows\system32\
+User: WIN10-LAB\ms
+LogonGuid: {4f65971f-669e-69e7-02ef-040000000000}
+LogonId: 0x4EF02
+TerminalSessionId: 1
+IntegrityLevel: High
+Hashes: MD5=BCF01E61144D6D6325650134823198B8,SHA256=B4E7BC24BF3F5C3DA2EB6E9EC5EC10F90099DEFA91B820F2F3FC70DD9E4785C4,IMPHASH=88CB9A420410BDA787E305B65518A934
+ParentProcessGuid: {4f65971f-66b9-69e7-b000-000000001f00}
+ParentProcessId: 1608
+ParentImage: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+ParentCommandLine: "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" 
+ParentUser: WIN10-LAB\ms
+Registry object added or deleted:
+RuleName: Suspicious,ImageBeginWithBackslash
+EventType: DeleteValue
+UtcTime: 2026-04-21 12:08:31.973
+ProcessGuid: {4f65971f-678c-69e7-0101-000000001f00}
+ProcessId: 8220
+Image: \\?\C:\Windows\system32\wbem\WMIADAP.EXE
+TargetObject: HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Perflib\Updating
+User: NT AUTHORITY\SYSTEM
+Registry value set:
+RuleName: Suspicious,ImageBeginWithBackslash
+EventType: SetValue
+UtcTime: 2026-04-21 12:08:31.973
+ProcessGuid: {4f65971f-678c-69e7-0101-000000001f00}
+ProcessId: 8220
+Image: \\?\C:\Windows\system32\wbem\WMIADAP.EXE
+TargetObject: HKLM\System\CurrentControlSet\Services\WmiApRpl\Performance\Object List
+Details: 10848 10854 10866 10876 10886 10906 10950 10960 10998 11004 11020
+User: NT AUTHORITY\SYSTEM
+Registry value set:
+RuleName: Suspicious,ImageBeginWithBackslash
+EventType: SetValue
+UtcTime: 2026-04-21 12:08:31.973
+ProcessGuid: {4f65971f-678c-69e7-0101-000000001f00}
+ProcessId: 8220
+Image: \\?\C:\Windows\system32\wbem\WMIADAP.EXE
+TargetObject: HKLM\System\CurrentControlSet\Services\WmiApRpl\Performance\First Help
+Details: DWORD (0x00002a61)
+User: NT AUTHORITY\SYSTEM
+Registry value set:
+RuleName: Suspicious,ImageBeginWithBackslash
+EventType: SetValue
+UtcTime: 2026-04-21 12:08:31.973
+ProcessGuid: {4f65971f-678c-69e7-0101-000000001f00}
+ProcessId: 8220
+Image: \\?\C:\Windows\system32\wbem\WMIADAP.EXE
+TargetObject: HKLM\System\CurrentControlSet\Services\WmiApRpl\Performance\First Counter
+Details: DWORD (0x00002a60)
+User: NT AUTHORI
+[RISK SCORE] 9
+HIGH ALERT
+
+TIME: 2026-04-21 12:12:31
+PROCESS: Process Create:
+RuleName: -
+UtcTime: 2026-04-21 12:12:26.600
+ProcessGuid: {4f65971f-69aa-69e7-4101-000000001f00}
+ProcessId: 10236
+Image: C:\Windows\System32\notepad.exe
+FileVersion: 10.0.19041.1865 (WinBuild.160101.0800)
+Description: Notepad
+Product: Microsoft® Windows® Operating System
+Company: Microsoft Corporation
+OriginalFileName: NOTEPAD.EXE
+CommandLine: "C:\Windows\system32\notepad.exe" 
+CurrentDirectory: C:\Windows\system32\
+User: WIN10-LAB\ms
+LogonGuid: {4f65971f-669e-69e7-02ef-040000000000}
+LogonId: 0x4EF02
+TerminalSessionId: 1
+IntegrityLevel: High
+Hashes: MD5=27F71B12CB585541885A31BE22F61C83,SHA256=F9D9B9DED9A67AA3CFDBD5002F3B524B265C4086C188E1BE7C936AB25627BF01,IMPHASH=320FAF01086570930EFF84A436797927
+ParentProcessGuid: {4f65971f-69a9-69e7-4001-000000001f00}
+ParentProcessId: 1368
+ParentImage: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+ParentCommandLine: "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -enc UwB0AGEAcgB0AC0AUAByAG8AYwBlAHMAcwAgAG4AbwB0AGUAcABhAGQA
+ParentUser: WIN10-LAB\ms
+File created:
+RuleName: -
+UtcTime: 2026-04-21 12:12:25.995
+ProcessGuid: {4f65971f-69a9-69e7-4001-000000001f00}
+ProcessId: 1368
+Image: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+TargetFilename: C:\Users\ms\AppData\Local\Temp\__PSScriptPolicyTest_i31qsdz1.334.ps1
+CreationUtcTime: 2026-04-21 12:12:25.995
+User: WIN10-LAB\ms
+Process Create:
+RuleName: -
+UtcTime: 2026-04-21 12:12:25.671
+ProcessGuid: {4f65971f-69a9-69e7-4001-000000001f00}
+ProcessId: 1368
+Image: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+FileVersion: 10.0.19041.2913 (WinBuild.160101.0800)
+Description: Windows PowerShell
+Product: Microsoft® Windows® Operating System
+Company: Microsoft Corporation
+OriginalFileName: PowerShell.EXE
+CommandLine: "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -enc UwB0AGEAcgB0AC0AUAByAG8AYwBlAHMAcwAgAG4AbwB0AGUAcABhAGQA
+CurrentDirectory: C:\Windows\system32\
+User: WIN10-LAB\ms
+LogonGuid: {4f65971f-669e-69e7-02ef-040000000000}
+LogonId: 0x4EF02
+TerminalSessionId: 1
+IntegrityLevel: High
+Hashes: MD5=BCF01E61144D6D6325650134823198B8,SHA256=B4E7BC24BF3F5C3DA2EB6E9EC5EC10F90099DEFA91B820F2F3FC70DD9E4785C4,IMPHASH=88CB9A420410BDA787E305B65518A934
+ParentProcessGuid: {4f65971f-66b9-69e7-b000-000000001f00}
+ParentProcessId: 1608
+ParentImage: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+ParentCommandLine: "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" 
+ParentUser: WIN10-LAB\ms
+Process terminated:
+RuleName: -
+UtcTime: 2026-04-21 12:11:13.081
+ProcessGuid: {4f65971f-695a-69e7-3801-000000001f00}
+ProcessId: 3348
+Image: C:\Users\ms\AppData\Local\Microsoft\OneDrive\26.055.0323.0004_1\FileCoAuth.exe
+User: WIN10-LAB\ms
+Registry value set:
+RuleName: InvDB
+EventType: SetValue
+UtcTime: 2026-04-21 12:11:11.257
+ProcessGuid: {4f65971f-66ba-69e7-b400-000000001f00}
+ProcessId: 2072
+Image: C:\Windows\system32\svchost.exe
+TargetObject: HKU\S-1-5-21-1658322846-454941589-2968391627-1000\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store\C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+Details: Binary Data
+User: NT AUTHORITY\SYSTEM
+Dns query:
+RuleName: -
+UtcTime: 2026-04-21 12:11:04.232
+ProcessGuid: {4f65971f-695c-69e7-3d01-000000001f00}
+ProcessId: 6284
+QueryName: wpad
+QueryStatus: 123
+QueryResults: -
+Image: <unknown process>
+User: WIN10-LAB\ms
+Dns query:
+RuleName: -
+UtcTim
+[RISK SCORE] 1
+LOW ALERT
+
+TIME: 2026-04-21 12:12:48
+PROCESS: Process Create:
+RuleName: -
+UtcTime: 2026-04-21 12:12:47.332
+ProcessGuid: {4f65971f-69bf-69e7-4301-000000001f00}
+ProcessId: 4148
+Image: C:\Windows\System32\notepad.exe
+FileVersion: 10.0.19041.1865 (WinBuild.160101.0800)
+Description: Notepad
+Product: Microsoft® Windows® Operating System
+Company: Microsoft Corporation
+OriginalFileName: NOTEPAD.EXE
+CommandLine: "C:\Windows\system32\notepad.exe" 
+CurrentDirectory: C:\Windows\system32\
+User: WIN10-LAB\ms
+LogonGuid: {4f65971f-669e-69e7-02ef-040000000000}
+LogonId: 0x4EF02
+TerminalSessionId: 1
+IntegrityLevel: High
+Hashes: MD5=27F71B12CB585541885A31BE22F61C83,SHA256=F9D9B9DED9A67AA3CFDBD5002F3B524B265C4086C188E1BE7C936AB25627BF01,IMPHASH=320FAF01086570930EFF84A436797927
+ParentProcessGuid: {4f65971f-69be-69e7-4201-000000001f00}
+ParentProcessId: 2708
+ParentImage: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+ParentCommandLine: "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -enc UwB0AGEAcgB0AC0AUAByAG8AYwBlAHMAcwAgAG4AbwB0AG
+[RISK SCORE] 9
+HIGH ALERT
+
+TIME: 2026-04-21 12:12:54
+PROCESS: Network connection detected:
+RuleName: -
+UtcTime: 2026-04-21 12:12:46.161
+ProcessGuid: {4f65971f-66b9-69e7-b000-000000001f00}
+ProcessId: 1608
+Image: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+User: WIN10-LAB\ms
+Protocol: tcp
+Initiated: true
+SourceIsIpv6: false
+SourceIp: 10.0.2.15
+SourceHostname: Win10-Lab
+SourcePort: 49875
+SourcePortName: -
+DestinationIsIpv6: false
+DestinationIp: 192.168.56.101
+DestinationHostname: -
+DestinationPort: 9999
+DestinationPortName: -
+Process Create:
+RuleName: -
+UtcTime: 2026-04-21 12:12:47.332
+ProcessGuid: {4f65971f-69bf-69e7-4301-000000001f00}
+ProcessId: 4148
+Image: C:\Windows\System32\notepad.exe
+FileVersion: 10.0.19041.1865 (WinBuild.160101.0800)
+Description: Notepad
+Product: Microsoft® Windows® Operating System
+Company: Microsoft Corporation
+OriginalFileName: NOTEPAD.EXE
+CommandLine: "C:\Windows\system32\notepad.exe" 
+CurrentDirectory: C:\Windows\system32\
+User: WIN10-LAB\ms
+LogonGuid: {4f65971f-669e-69e7-02ef-040000000000}
+LogonId: 0x4EF02
+TerminalSessionId: 1
+IntegrityLevel: High
+Hashes: MD5=27F71B12CB585541885A31BE22F61C83,SHA256=F9D9B9DED9A67AA3CFDBD5002F3B524B265C4086C188E1BE7C936AB25627BF01,IMPHASH=320FAF01086570930EFF84A436797927
+ParentProcessGuid: {4f65971f-69be-69e7-4201-000000001f00}
+ParentProcessId: 2708
+ParentImage: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+ParentCommandLine: "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -enc UwB0AGEAcgB0AC0AUAByAG8AYwBlAHMAcwAgAG4AbwB0AGUAcABhAGQA
+ParentUser: WIN10-LAB\ms
+File created:
+RuleName: -
+UtcTime: 2026-04-21 12:12:47.087
+ProcessGuid: {4f65971f-69be-69e7-4201-000000001f00}
+ProcessId: 2708
+Image: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+TargetFilename: C:\Users\ms\AppData\Local\Temp\__PSScriptPolicyTest_w0wj2fbj.xd5.ps1
+CreationUtcTime: 2026-04-21 12:12:47.087
+User: WIN10-LAB\ms
+Process Create:
+RuleName: -
+UtcTime: 2026-04-21 12:12:46.968
+ProcessGuid: {4f65971f-69be-69e7-4201-000000001f00}
+ProcessId: 2708
+Image: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+FileVersion: 10.0.19041.2913 (WinBuild.160101.0800)
+Description: Windows PowerShell
+Product: Microsoft® Windows® Operating System
+Company: Microsoft Corporation
+OriginalFileName: PowerShell.EXE
+CommandLine: "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -enc UwB0AGEAcgB0AC0AUAByAG8AYwBlAHMAcwAgAG4AbwB0AGUAcABhAGQA
+CurrentDirectory: C:\Windows\system32\
+User: WIN10-LAB\ms
+LogonGuid: {4f65971f-669e-69e7-02ef-040000000000}
+LogonId: 0x4EF02
+TerminalSessionId: 1
+IntegrityLevel: High
+Hashes: MD5=BCF01E61144D6D6325650134823198B8,SHA256=B4E7BC24BF3F5C3DA2EB6E9EC5EC10F90099DEFA91B820F2F3FC70DD9E4785C4,IMPHASH=88CB9A420410BDA787E305B65518A934
+ParentProcessGuid: {4f65971f-66b9-69e7-b000-000000001f00}
+ParentProcessId: 1608
+ParentImage: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+ParentCommandLine: "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" 
+ParentUser: WIN10-LAB\ms
+Network connection detected:
+RuleName: -
+UtcTime: 2026-04-21 12:12:29.535
+ProcessGuid: {4f65971f-66b9-69e7-b000-000000001f00}
+ProcessId: 1608
+Image: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+User: WIN10-LAB\ms
+Protocol: tcp
+Initiated: true
+SourceIsIpv6: false
+SourceIp: 10.0.2.15
+SourceHostname: Win10-Lab
+SourcePort: 49874
+SourcePortName: -
+DestinationIsIpv6: false
+DestinationIp: 192.168.56.101
+DestinationHostname: -
+DestinationPort: 9999
+DestinationPortName: -
+Process Create:
+RuleName: -
+UtcTime: 2026-04-21 12:12:26.600
+ProcessGuid: {4f65971f-69aa-69e7-4101-000000001f00}
+ProcessId: 10236
+Image: C:\Windows\System32\notepad.exe
+FileVersion: 10.0.19041.1865 (WinBuild.160101.0800)
+Description: Notepad
+Product: Microsoft® Windows® Operating System
+Company: Microsoft Corporation
+OriginalFileName: NOTEPAD.EXE
+CommandLine: "C:\Windows\system32\notepad.exe" 
+CurrentDirectory: C:\Windows\system32\
+User: WIN10-LAB\ms
+LogonGuid: {4f65971f-669e-69e7-02ef-040000000000}
+LogonId: 0x4EF02
+TerminalSessionI
+[RISK SCORE] 9
+HIGH ALERT
+
+TIME: 2026-04-21 12:14:49
+PROCESS: C:\Windows\System32\taskhostw.exe taskhostw.exe -RegisterUserDevice -NewAccount
+[RISK SCORE] 1
+LOW ALERT
+
+TIME: 2026-04-21 12:15:03
+PROCESS: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -enc UwB0AGEAcgB0AC0AUAByAG8AYwBlAHMAcwAgAG4AbwB0AGUAcABhAGQA
+[RISK SCORE] 9
+HIGH ALERT
+

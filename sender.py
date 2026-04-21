@@ -1,29 +1,36 @@
 import socket
 import time
 
-# 🔧 CHANGE THIS to your server IP (Ubuntu or VPS later)
 HOST = "127.0.0.1"
 PORT = 9999
 
-def send_log(data):
-    try:
-        s = socket.socket()
-        s.connect((HOST, PORT))
-        s.send(data.encode())
-        s.close()
-    except Exception as e:
-        print("Connection failed:", e)
-
-
-while True:
-    # 🔥 Example simulated log
-    log = f"""
-TIME: {time.strftime("%Y-%m-%d %H:%M:%S")}
-PROCESS: powershell.exe -> cmd.exe
+attacks = [
+    """TIME: 2026-04-20 10:12:01
+PROCESS: powershell.exe -> powershell.exe -enc ZQBjAGgAbwAgAGgAYQBjAGsAZQBkAA==
+[RISK SCORE] 9
+HIGH ALERT
+""",
+    """TIME: 2026-04-20 10:13:45
+PROCESS: cmd.exe -> powershell.exe -> notepad.exe
 [RISK SCORE] 8
 HIGH ALERT
+""",
+    """TIME: 2026-04-20 10:14:10
+PROCESS: explorer.exe -> powershell.exe
+[RISK SCORE] 5
+MEDIUM ALERT
 """
+]
 
-    send_log(log)
-    print("Log sent...")
+def send_log(log):
+    s = socket.socket()
+    s.connect((HOST, PORT))
+    s.send(log.encode())
+    s.close()
+
+i = 0
+while True:
+    send_log(attacks[i % len(attacks)])
+    print("Sent attack log")
+    i += 1
     time.sleep(5)

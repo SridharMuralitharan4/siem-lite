@@ -1,190 +1,106 @@
 import socket
-import re
 from datetime import datetime
-from collections import defaultdict
 
 HOST = "0.0.0.0"
 PORT = 9999
 
-log_file = "siem_logs.txt"
+LOG_FILE = "siem_logs.txt"
 
-# Track seen events (to prevent duplicates)
-seen_events = set()
 
-# Stats
-stats = {
-    "high": 0,
-    "medium": 0,
-    "low": 0,
-    "total": 0
-}
+def extract_process(data):
+    lines = data.split("\n")
 
-process_count = defaultdict(int)
-parent_count = defaultdict(int)
-chain_count = defaultdict(int)
+    image = ""
+    command = ""
 
-# -----------------------------
-# Timestamp Extraction
-# -----------------------------
-def extract_timestamp(log_block):
-    match = re.search(r'utctime:\s*([0-9\-:\. ]+)', log_block.lower())
-    if match:
-        try:
-            return datetime.strptime(match.group(1).strip(), "%Y-%m-%d %H:%M:%S.%f")
-        except:
-            return datetime.now()
-    return datetime.now()
+    for line in lines:
+        line = line.strip()
 
-# -----------------------------
-# Extract Process Info
-# -----------------------------
-def extract_process_info(log):
-    image = re.search(r'image:\s*(.*)', log, re.IGNORECASE)
-    parent = re.search(r'parentimage:\s*(.*)', log, re.IGNORECASE)
+        if line.startswith("Image:"):
+            image = line.replace("Image:", "").strip()
 
-    image = image.group(1).strip() if image else "unknown"
-    parent = parent.group(1).strip() if parent else "unknown"
+        if line.startswith("CommandLine:"):
+            command = line.replace("CommandLine:", "").strip()
 
-    return image.lower(), parent.lower()
+    return f"{image} {command}".strip()
 
-# -----------------------------
-# Risk Scoring
-# -----------------------------
-def calculate_risk(image, parent, log):
-    score = 0
-    reasons = []
 
-    if "powershell.exe" in image:
-        score += 1
-        reasons.append("PowerShell activity (+1)")
+def detect_threat(process):
+    p = process.lower()
 
-    if "powershell.exe" in parent:
-        score += 2
-        reasons.append("Script engine parent (+2)")
+    # ✅ ignore noise
+    trusted = [
+        "wmiprvse.exe",
+        "wmiadap.exe",
+        "trustedinstaller.exe",
+        "svchost.exe",
+        "taskhostw.exe",
+        "services.exe"
+    ]
 
-    if "powershell" in parent and "notepad.exe" in image:
-        score += 1
-        reasons.append("PowerShell spawning process (+1)")
+    for t in trusted:
+        if t in p:
+            return 1, "LOW"
 
-    if "temp" in image or "appdata" in image:
-        score += 2
-        reasons.append("Suspicious path (+2)")
+    # 🔴 HIGH
+    if "encodedcommand" in p or "-enc" in p:
+        return 9, "HIGH"
 
-    if "system32" in parent and ("users" in image or "appdata" in image):
-        score += 2
-        reasons.append("System -> user path (+2)")
+    if "powershell" in p and "cmd" in p:
+        return 8, "HIGH"
 
-    return score, reasons
+    # 🟠 MEDIUM
+    if "powershell" in p:
+        return 5, "MEDIUM"
 
-# -----------------------------
-# Classify Risk
-# -----------------------------
-def classify(score):
-    if score >= 7:
-        return "HIGH"
-    elif score >= 4:
-        return "MEDIUM"
-    else:
-        return "LOW"
+    if "cmd.exe" in p:
+        return 4, "MEDIUM"
 
-# -----------------------------
-# Save to File
-# -----------------------------
-def save_event(timestamp, process, parent, score, level, chain):
-    with open(log_file, "a") as f:
-        f.write(f"\nTIME: {timestamp}\n")
-        f.write(f"PROCESS: {parent} -> {process}\n")
-        f.write(f"[CHAIN] {chain}\n")
-        f.write(f"[RISK SCORE] {score}\n")
-        f.write(f"{level} ALERT\n")
-        f.write("="*40 + "\n")
+    # 🟢 LOW
+    return 2, "LOW"
 
-# -----------------------------
-# Process Logs
-# -----------------------------
-def process_log(data):
-    global stats
 
-    timestamp = extract_timestamp(data)
-    image, parent = extract_process_info(data)
-
-    # Dedup key
-    event_id = f"{parent}->{image}"
-    if event_id in seen_events:
+def handle_client(conn):
+    try:
+        data = conn.recv(4096).decode(errors="ignore")
+    except:
+        conn.close()
         return
-    seen_events.add(event_id)
 
-    score, reasons = calculate_risk(image, parent, data)
-    level = classify(score)
+    conn.close()
 
-    # Update stats
-    stats["total"] += 1
-    stats[level.lower()] += 1
+    if not data.strip():
+        return
 
-    process_count[image] += 1
-    parent_count[parent] += 1
+    # 🔥 extract only meaningful part
+    process_line = extract_process(data)
 
-    chain = f"{parent} -> {image}"
-    chain_count[chain] += 1
+    score, level = detect_threat(process_line)
 
-    # Console output
-    print("\n--- PROCESS CHAINS ---")
-    print(f"PROCESS: {parent} -> {image}")
+    log_entry = f"""TIME: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+PROCESS: {process_line}
+[RISK SCORE] {score}
+{level} ALERT
 
-    for r in reasons:
-        print(f"[+] {r}")
+"""
 
-    print(f"[RISK SCORE] {score}")
-    print(f"{level} ALERT")
-    print("="*40)
+    print(log_entry)
 
-    # Save
-    save_event(timestamp, image, parent, score, level, chain)
+    with open(LOG_FILE, "a") as f:
+        f.write(log_entry)
 
-# -----------------------------
-# Dashboard Print
-# -----------------------------
-def print_dashboard():
-    print("\n===== SIEM DASHBOARD =====")
-    print(f"Total Events: {stats['total']}")
-    print(f"High Alerts: {stats['high']}")
-    print(f"Medium Alerts: {stats['medium']}")
-    print(f"Low Events: {stats['low']}")
 
-    print("\n--- TOP PROCESSES ---")
-    for k, v in sorted(process_count.items(), key=lambda x: x[1], reverse=True)[:3]:
-        print(f"{k} : {v}")
-
-    print("\n--- TOP PARENTS ---")
-    for k, v in sorted(parent_count.items(), key=lambda x: x[1], reverse=True)[:3]:
-        print(f"{k} : {v}")
-
-    print("\n--- TOP CHAINS ---")
-    for k, v in sorted(chain_count.items(), key=lambda x: x[1], reverse=True)[:3]:
-        print(f"{k} : {v}")
-
-# -----------------------------
-# Server
-# -----------------------------
 def start_server():
-    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server.bind((HOST, PORT))
-    server.listen(5)
+    s = socket.socket()
+    s.bind((HOST, PORT))
+    s.listen(5)
 
-    print("[+] SIEM Listener started... Waiting for logs...")
+    print(f"[+] SIEM listening on {HOST}:{PORT}")
 
     while True:
-        conn, addr = server.accept()
-        print(f"\n[+] Connection from {addr}")
+        conn, addr = s.accept()
+        handle_client(conn)
 
-        data = conn.recv(65535).decode(errors="ignore")
-        conn.close()
 
-        process_log(data)
-        print_dashboard()
-
-# -----------------------------
-# Run
-# -----------------------------
 if __name__ == "__main__":
     start_server()
