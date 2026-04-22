@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from collections import Counter
 from datetime import datetime
 import os
@@ -8,9 +8,81 @@ app = Flask(__name__)
 LOG_FILE = "siem_logs.txt"
 
 
+def extract_process(data):
+    lines = data.split("\n")
+
+    image = ""
+    command = ""
+
+    for line in lines:
+        line = line.strip()
+
+        if line.startswith("Image:"):
+            image = line.replace("Image:", "").strip()
+
+        if line.startswith("CommandLine:"):
+            command = line.replace("CommandLine:", "").strip()
+
+    return f"{image} {command}".strip()
+
+
+def detect_threat(process):
+    p = process.lower()
+
+    trusted = [
+        "wmiprvse.exe",
+        "wmiadap.exe",
+        "trustedinstaller.exe",
+        "svchost.exe",
+        "taskhostw.exe",
+        "services.exe"
+    ]
+
+    for t in trusted:
+        if t in p:
+            return 1, "LOW"
+
+    if "encodedcommand" in p or "-enc" in p:
+        return 9, "HIGH"
+
+    if "powershell" in p and "cmd" in p:
+        return 8, "HIGH"
+
+    if "powershell" in p:
+        return 5, "MEDIUM"
+
+    if "cmd.exe" in p:
+        return 4, "MEDIUM"
+
+    return 2, "LOW"
+
+
+# 🔥 NEW: API endpoint to receive logs
+@app.route("/log", methods=["POST"])
+def receive_log():
+    data = request.json.get("log", "")
+
+    if not data:
+        return jsonify({"status": "no data"}), 400
+
+    process_line = extract_process(data)
+    score, level = detect_threat(process_line)
+
+    log_entry = f"""TIME: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+PROCESS: {process_line}
+[RISK SCORE] {score}
+{level} ALERT
+
+"""
+
+    with open(LOG_FILE, "a") as f:
+        f.write(log_entry)
+
+    return jsonify({"status": "received", "level": level})
+
+
 def parse_logs():
     events = []
-    seen = set()
 
     try:
         with open(LOG_FILE, "r") as f:
@@ -25,10 +97,7 @@ def parse_logs():
 
         if line.startswith("TIME:"):
             if current:
-                key = (current.get("process"), current.get("timestamp"))
-                if key not in seen:
-                    events.append(current)
-                    seen.add(key)
+                events.append(current)
             current = {}
             current["timestamp"] = line.replace("TIME:", "").strip()
 
@@ -47,33 +116,21 @@ def parse_logs():
                 current["level"] = "LOW"
 
     if current:
-        key = (current.get("process"), current.get("timestamp"))
-        if key not in seen:
-            events.append(current)
+        events.append(current)
 
     return events
 
 
 @app.route("/")
 def index():
-    query = request.args.get("q", "").lower()
-    level_filter = request.args.get("level")
-
     events = parse_logs()
-
-    if query:
-        events = [e for e in events if query in e["process"].lower()]
-
-    if level_filter:
-        events = [e for e in events if e["level"] == level_filter]
 
     high = len([e for e in events if e["level"] == "HIGH"])
     medium = len([e for e in events if e["level"] == "MEDIUM"])
     low = len([e for e in events if e["level"] == "LOW"])
 
-    process_names = [e["process"].split("\\")[-1] for e in events]
-    process_count = Counter(process_names)
-    top_processes = process_count.most_common(5)
+    processes = [e["process"].split("\\")[-1] for e in events]
+    top_processes = Counter(processes).most_common(5)
 
     top_threats = sorted(events, key=lambda x: x.get("score", 0), reverse=True)[:5]
 
@@ -83,7 +140,6 @@ def index():
         high=high,
         medium=medium,
         low=low,
-        query=query,
         top_processes=top_processes,
         top_threats=top_threats
     )

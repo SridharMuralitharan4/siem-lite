@@ -1,36 +1,33 @@
-import socket
+import requests
 import time
 
-HOST = "127.0.0.1"
-PORT = 9999
+print("=== SIEM HTTP Agent ===")
+
+URL = input("Enter SIEM Server URL (example: https://your-app.onrender.com): ").strip()
+
+endpoint = f"{URL}/log"
 
 attacks = [
-    """TIME: 2026-04-20 10:12:01
-PROCESS: powershell.exe -> powershell.exe -enc ZQBjAGgAbwAgAGgAYQBjAGsAZQBkAA==
-[RISK SCORE] 9
-HIGH ALERT
-""",
-    """TIME: 2026-04-20 10:13:45
-PROCESS: cmd.exe -> powershell.exe -> notepad.exe
-[RISK SCORE] 8
-HIGH ALERT
-""",
-    """TIME: 2026-04-20 10:14:10
-PROCESS: explorer.exe -> powershell.exe
-[RISK SCORE] 5
-MEDIUM ALERT
-"""
+    """Image: C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe
+CommandLine: powershell -EncodedCommand ZQBjAGgAbwAgIkhBQ0tFRCI=""",
+
+    """Image: C:\\Windows\\System32\\cmd.exe
+CommandLine: cmd.exe /c powershell -EncodedCommand ZQBjAGgAbwAgIkhBQ0tFRCI=""",
+
+    """Image: C:\\Windows\\explorer.exe
+CommandLine: explorer.exe"""
 ]
 
-def send_log(log):
-    s = socket.socket()
-    s.connect((HOST, PORT))
-    s.send(log.encode())
-    s.close()
-
 i = 0
+
 while True:
-    send_log(attacks[i % len(attacks)])
-    print("Sent attack log")
+    log = attacks[i % len(attacks)]
+
+    try:
+        r = requests.post(endpoint, json={"log": log})
+        print("[+] Sent:", r.json())
+    except Exception as e:
+        print("[!] Failed:", e)
+
     i += 1
     time.sleep(5)
