@@ -1,11 +1,14 @@
 from flask import Flask, render_template, request, jsonify
-from collections import Counter
+from collections import Counter, defaultdict
 from datetime import datetime
 import os
 
 app = Flask(__name__)
 
 LOG_FILE = "siem_logs.txt"
+
+# 🔥 store per-user counts (in-memory)
+user_stats = defaultdict(lambda: {"HIGH": 0, "MEDIUM": 0, "LOW": 0})
 
 
 def extract_process(data):
@@ -30,12 +33,8 @@ def detect_threat(process):
     p = process.lower()
 
     trusted = [
-        "wmiprvse.exe",
-        "wmiadap.exe",
-        "trustedinstaller.exe",
-        "svchost.exe",
-        "taskhostw.exe",
-        "services.exe"
+        "wmiprvse.exe", "wmiadap.exe", "trustedinstaller.exe",
+        "svchost.exe", "taskhostw.exe", "services.exe"
     ]
 
     for t in trusted:
@@ -57,10 +56,11 @@ def detect_threat(process):
     return 2, "LOW"
 
 
-# 🔥 NEW: API endpoint to receive logs
+# 🔥 API
 @app.route("/log", methods=["POST"])
 def receive_log():
     data = request.json.get("log", "")
+    user = request.json.get("user", "unknown")
 
     if not data:
         return jsonify({"status": "no data"}), 400
@@ -68,7 +68,11 @@ def receive_log():
     process_line = extract_process(data)
     score, level = detect_threat(process_line)
 
+    # 🔥 update per-user stats
+    user_stats[user][level] += 1
+
     log_entry = f"""TIME: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+USER: {user}
 PROCESS: {process_line}
 [RISK SCORE] {score}
 {level} ALERT
@@ -100,6 +104,9 @@ def parse_logs():
                 events.append(current)
             current = {}
             current["timestamp"] = line.replace("TIME:", "").strip()
+
+        elif line.startswith("USER:"):
+            current["user"] = line.replace("USER:", "").strip()
 
         elif line.startswith("PROCESS:"):
             current["process"] = line.replace("PROCESS:", "").strip()
@@ -141,7 +148,8 @@ def index():
         medium=medium,
         low=low,
         top_processes=top_processes,
-        top_threats=top_threats
+        top_threats=top_threats,
+        user_stats=user_stats
     )
 
 

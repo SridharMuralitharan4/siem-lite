@@ -3,12 +3,14 @@ import requests
 print("=== SIEM HTTP Agent ===")
 
 URL = input("Enter SIEM Server URL: ").strip()
+USER = input("Enter your user name (example: user1): ").strip()
+
 endpoint = f"{URL}/log"
 
 while True:
-    print("\n1. Normal Activity")
-    print("2. Medium Activity")
-    print("3. HIGH Attack (Encoded PowerShell)")
+    print("\n1. Normal")
+    print("2. Medium")
+    print("3. HIGH Attack")
     print("4. Exit")
 
     choice = input("Select: ").strip()
@@ -29,11 +31,10 @@ CommandLine: powershell -EncodedCommand ZQBjAGgAbwAgIkhBQ0tFRCI="""
         break
 
     else:
-        print("Invalid")
         continue
 
     try:
-        r = requests.post(endpoint, json={"log": log})
+        r = requests.post(endpoint, json={"log": log, "user": USER})
         print("[+] Sent:", r.json())
     except Exception as e:
         print("[!] Failed:", e)
