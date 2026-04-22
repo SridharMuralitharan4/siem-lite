@@ -4,10 +4,11 @@ from datetime import datetime
 import os
 
 app = Flask(__name__)
-app.secret_key = "secret123"  # simple for demo
+app.secret_key = "secret123"
 
 LOG_FILE = "siem_logs.txt"
 
+# 🔥 per-user stats
 user_stats = defaultdict(lambda: {"HIGH": 0, "MEDIUM": 0, "LOW": 0})
 
 
@@ -16,6 +17,7 @@ def extract_process(data):
     image, command = "", ""
 
     for line in lines:
+        line = line.strip()
         if line.startswith("Image:"):
             image = line.replace("Image:", "").strip()
         if line.startswith("CommandLine:"):
@@ -51,7 +53,7 @@ def detect_threat(process):
     return 2, "LOW"
 
 
-# 🔥 LOGIN PAGE
+# 🔥 LOGIN
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -62,7 +64,7 @@ def login():
     return render_template("login.html")
 
 
-# 🔥 LOG RECEIVER
+# 🔥 RECEIVE LOGS
 @app.route("/log", methods=["POST"])
 def receive_log():
     data = request.json.get("log", "")
@@ -84,7 +86,7 @@ PROCESS: {process_line}
     with open(LOG_FILE, "a") as f:
         f.write(log_entry)
 
-    return jsonify({"status": "received"})
+    return jsonify({"status": "received", "level": level})
 
 
 def parse_logs(current_user):
@@ -157,7 +159,8 @@ def index():
         low=low,
         top_processes=top_processes,
         top_threats=top_threats,
-        user=current_user
+        user=current_user,
+        user_stats=user_stats  # 🔥 IMPORTANT FIX
     )
 
 
