@@ -12,9 +12,7 @@
             padding: 20px;
         }
 
-        h1 {
-            color: #38bdf8;
-        }
+        h1 { color: #38bdf8; }
 
         .top-bar {
             display: flex;
@@ -89,6 +87,13 @@
         .level.high { color: red; }
         .level.medium { color: orange; }
         .level.low { color: lightgreen; }
+
+        .user-box {
+            background: #1e293b;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 
@@ -97,8 +102,7 @@
 <div class="top-bar">
     <h1>🚨 SIEM Dashboard</h1>
 
-    <!-- 🔥 DOWNLOAD BUTTON -->
-    <a href="https://github.com/SridharMuralitharan4/siem-lite/blob/main/sender.py" 
+    <a href="https://github.com/SridharMuralitharan4/siem-lite/blob/main/sender.py"
        class="download-btn" target="_blank">
        ⬇ Download Agent
     </a>
@@ -112,8 +116,19 @@
 </div>
 
 <form method="get">
-    <input type="text" name="q" placeholder="Search process..." value="{{ query }}">
+    <input type="text" name="q" placeholder="Search process...">
 </form>
+
+<!-- 🔥 USER STATS -->
+<h3>👤 User Stats</h3>
+{% for user, stats in user_stats.items() %}
+<div class="user-box">
+    <b>{{ user }}</b><br>
+    🔴 High: {{ stats['HIGH'] }} |
+    🟠 Medium: {{ stats['MEDIUM'] }} |
+    🟢 Low: {{ stats['LOW'] }}
+</div>
+{% endfor %}
 
 <h3>📊 Analytics</h3>
 
@@ -138,6 +153,7 @@
 {% for e in events %}
 <div class="event">
     <div class="timestamp">{{ e.timestamp }}</div>
+    <div><b>User:</b> {{ e.user }}</div>
     <div>{{ e.process }}</div>
     <div class="level {{ e.level.lower() }}">{{ e.level }}</div>
 </div>
