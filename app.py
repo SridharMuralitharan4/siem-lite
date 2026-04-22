@@ -1,28 +1,23 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect, session
 from collections import Counter, defaultdict
 from datetime import datetime
 import os
 
 app = Flask(__name__)
+app.secret_key = "secret123"  # simple for demo
 
 LOG_FILE = "siem_logs.txt"
 
-# 🔥 store per-user counts (in-memory)
 user_stats = defaultdict(lambda: {"HIGH": 0, "MEDIUM": 0, "LOW": 0})
 
 
 def extract_process(data):
     lines = data.split("\n")
-
-    image = ""
-    command = ""
+    image, command = "", ""
 
     for line in lines:
-        line = line.strip()
-
         if line.startswith("Image:"):
             image = line.replace("Image:", "").strip()
-
         if line.startswith("CommandLine:"):
             command = line.replace("CommandLine:", "").strip()
 
@@ -56,19 +51,26 @@ def detect_threat(process):
     return 2, "LOW"
 
 
-# 🔥 API
+# 🔥 LOGIN PAGE
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        username = request.form.get("username")
+        if username:
+            session["user"] = username
+            return redirect("/")
+    return render_template("login.html")
+
+
+# 🔥 LOG RECEIVER
 @app.route("/log", methods=["POST"])
 def receive_log():
     data = request.json.get("log", "")
     user = request.json.get("user", "unknown")
 
-    if not data:
-        return jsonify({"status": "no data"}), 400
-
     process_line = extract_process(data)
     score, level = detect_threat(process_line)
 
-    # 🔥 update per-user stats
     user_stats[user][level] += 1
 
     log_entry = f"""TIME: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
@@ -82,10 +84,10 @@ PROCESS: {process_line}
     with open(LOG_FILE, "a") as f:
         f.write(log_entry)
 
-    return jsonify({"status": "received", "level": level})
+    return jsonify({"status": "received"})
 
 
-def parse_logs():
+def parse_logs(current_user):
     events = []
 
     try:
@@ -100,7 +102,7 @@ def parse_logs():
         line = line.strip()
 
         if line.startswith("TIME:"):
-            if current:
+            if current and current.get("user") == current_user:
                 events.append(current)
             current = {}
             current["timestamp"] = line.replace("TIME:", "").strip()
@@ -122,15 +124,21 @@ def parse_logs():
             else:
                 current["level"] = "LOW"
 
-    if current:
+    if current and current.get("user") == current_user:
         events.append(current)
 
     return events
 
 
+# 🔥 DASHBOARD
 @app.route("/")
 def index():
-    events = parse_logs()
+    if "user" not in session:
+        return redirect("/login")
+
+    current_user = session["user"]
+
+    events = parse_logs(current_user)
 
     high = len([e for e in events if e["level"] == "HIGH"])
     medium = len([e for e in events if e["level"] == "MEDIUM"])
@@ -149,7 +157,7 @@ def index():
         low=low,
         top_processes=top_processes,
         top_threats=top_threats,
-        user_stats=user_stats
+        user=current_user
     )
 
 
