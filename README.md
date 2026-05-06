@@ -1,57 +1,212 @@
-# 🔐 SIEM-lite: Real-Time Log Monitoring & Threat Detection
+# 🚨 SIEM Lite — Cloud-Based Threat Detection Dashboard
 
-A lightweight SIEM (Security Information and Event Management) system built using Python and Flask to simulate real-world security monitoring.
+A lightweight cloud-hosted SIEM (Security Information and Event Management) system built using Python and Flask.
 
----
-
-## 🚀 Features
-
-- 📡 Real-time log ingestion via socket listener
-- 🔗 Process chain correlation
-- ⚠️ Risk scoring engine (Low / Medium / High)
-- 📊 Interactive dashboard (Flask + Chart.js)
-- 🔍 Search & filter logs
-- 📈 Analytics (Top processes, alert distribution)
-- 🧠 Threat summary (Top threats detection)
-- 🧪 Simulated attacker behavior using PowerShell process spawning
----
-
-## 🛠️ Tech Stack
-
-- Python
-- Flask
-- Chart.js
-- Linux (Ubuntu VM)
+This project simulates real-world SOC workflows by collecting logs from distributed Windows agents, analyzing suspicious activity, classifying threats, and visualizing alerts through a live dashboard.
 
 ---
 
-## 🧪 How It Works
+# 🔥 Features
 
-1. `siem.py` listens for incoming logs from a Windows machine
-2. Logs are parsed and risk-scored
-3. Events are stored in `siem_logs.txt`
-4. `app.py` reads logs and serves dashboard UI
-5. `viewer.py` allows CLI-based log inspection
+## ✅ Log Ingestion
+
+* Collects logs from Windows endpoints
+* HTTP-based log transmission
+* Distributed agent architecture
+* Cloud-hosted ingestion server
+
+## ✅ Threat Detection
+
+* Detects suspicious PowerShell activity
+* Detects encoded PowerShell commands
+* Risk scoring system
+* Threat classification:
+
+  * HIGH
+  * MEDIUM
+  * LOW
+
+## ✅ Dashboard & Analytics
+
+* Real-time dashboard visualization
+* Pie chart analytics
+* Process frequency analytics
+* Top threats section
+* Per-user log tracking
+
+## ✅ Multi-User Support
+
+* User login system
+* Session-based access
+* User-specific log visibility
+* Isolated dashboard views
+
+## ✅ Attack Simulation
+
+* Interactive attack simulation menu
+* Manual trigger for:
+
+  * Normal activity
+  * Medium alerts
+  * High-severity attacks
 
 ---
 
-## ▶️ Setup & Run
+# 🧠 Architecture
+
+```text
+Windows Agent (sender.py)
+        ↓
+HTTP POST Requests
+        ↓
+Flask SIEM Server (Render Cloud)
+        ↓
+Detection Engine + Risk Scoring
+        ↓
+Dashboard Visualization
+```
+
+---
+
+# ⚙️ Technologies Used
+
+* Python
+* Flask
+* HTML/CSS
+* Chart.js
+* Render Cloud Platform
+* Git & GitHub
+
+---
+
+# 📸 Screenshots
+
+## 🔐 Login Page
+
+Provides simple multi-user access control.
+
+## 📊 SIEM Dashboard
+
+Displays:
+
+* Threat levels
+* Real-time alerts
+* Process analytics
+* User activity
+
+---
+
+# 🚀 Deployment
+
+The project is deployed publicly using Render.
+
+Live Demo:
+
+```text
+https://siem-lite.onrender.com
+```
+
+---
+
+# 📂 Project Structure
+
+```text
+siem-lite/
+│
+├── app.py
+├── sender.py
+├── requirements.txt
+├── Procfile
+├── siem_logs.txt
+│
+├── templates/
+│   ├── index.html
+│   └── login.html
+│
+└── screenshots/
+    ├── dashboard.png
+    └── login.png
+```
+
+---
+
+# ▶️ Running Locally
+
+## Clone Repository
 
 ```bash
-# create virtual env
-python3 -m venv siem-env
-source siem-env/bin/activate
+git clone https://github.com/SridharMuralitharan4/siem-lite.git
+cd siem-lite
+```
 
-# install dependencies
+## Install Requirements
+
+```bash
 pip install -r requirements.txt
+```
 
-# run SIEM listener
-python3 siem.py
+## Run Server
 
-# run dashboard
-python3 app.py
+```bash
+python app.py
+```
 
+---
 
+# 🛰️ Running the Agent
 
-#open
-http://127.0.0.1:5000
+```bash
+python sender.py
+```
+
+The agent will:
+
+* Ask for server URL
+* Ask for username
+* Allow interactive attack simulation
+
+---
+
+# 🔥 Example Simulated Attack
+
+```powershell
+powershell -EncodedCommand ZQBjAGgAbwAgIkhBQ0tFRCI=
+```
+
+This triggers:
+
+* HIGH alert classification
+* Increased risk score
+* Dashboard visualization
+
+---
+
+# 🎯 Learning Outcomes
+
+This project helped in understanding:
+
+* SIEM fundamentals
+* Log ingestion pipelines
+* Threat detection logic
+* Risk scoring systems
+* Cloud deployment workflows
+* Distributed system architecture
+* Multi-user dashboard design
+
+---
+
+# ⚠️ Disclaimer
+
+This project is created strictly for educational and defensive cybersecurity purposes.
+
+---
+
+# 👨‍💻 Author
+
+Sridhar Muralitharan
+
+GitHub:
+
+```text
+https://github.com/SridharMuralitharan4
+```
